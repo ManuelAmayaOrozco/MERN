@@ -11,6 +11,7 @@ const CrearUsuario = () => {
     edad: 18,
     telefono: 6,
     correo: '',
+    contrasenya: '',
     foto: ''
   };
  
@@ -44,6 +45,8 @@ const CrearUsuario = () => {
     formData.append('edad', usuario.edad);
     formData.append('telefono', usuario.telefono);
     formData.append('correo', usuario.correo);
+    formData.append('contrasenya', usuario.contrasenya);
+
     if (foto) {
       formData.append('foto', foto); // Añadir la foto al formulario
     }
@@ -79,6 +82,7 @@ const CrearUsuario = () => {
     formData.append('edad', usuario.edad);
     formData.append('telefono', usuario.telefono);
     formData.append('correo', usuario.correo);
+    formData.append('contrasenya', usuario.contrasenya);
     if (foto) {
       formData.append('foto', foto); // Añadir la foto al formulario si se ha seleccionado una nueva
     }
@@ -112,6 +116,7 @@ const CrearUsuario = () => {
         edad: res.data.edad,
         telefono: res.data.telefono,
         correo: res.data.correo,
+        contrasenya: res.data.contrasenya
       });
     } catch (error) {
       console.error('Error al obtener el usuario:', error);
@@ -189,6 +194,18 @@ const CrearUsuario = () => {
               required
               name="correo"
               value={usuario.correo}
+              onChange={capturarDatos}
+            />
+          </div>
+          <div className="mb-3">
+            <label>Contraseña:</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Ingresa la contraseña del socio"
+              required
+              name="contrasenya"
+              value={usuario.contrasenya}
               onChange={capturarDatos}
             />
           </div>

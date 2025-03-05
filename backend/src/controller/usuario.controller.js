@@ -2,6 +2,7 @@ const usuarioCtrl = {};
 const Usuario = require('../models/usuario');
 const fs = require('fs');
 const path = require('path');
+const md5 = require('md5');
 
 
 // Listar usuarios
@@ -24,16 +25,17 @@ usuarioCtrl.getUsu = async (req, res) => { //Este es para todos los usuarios
 // Crear un usuario
 usuarioCtrl.createUsu = async (req, res) => {
   try {
-    const { nombre, apellido, correo, telefono, edad } = req.body;
+    const { nombre, apellido, correo, telefono, edad, contrasenya } = req.body;
 
 
-    if (!nombre || !correo || !apellido || !telefono) {
-      return res.status(400).json({ message: 'El nombre, apellidos, teléfono y correo son obligatorios' });
+    if (!nombre || !correo || !apellido || !telefono || !contrasenya ) {
+      return res.status(400).json({ message: 'El nombre, apellidos, teléfono, correo y contraseña son obligatorios' });
     }
 
 
     const nombreFoto = req.body.nombreFoto || 'noFoto.png'; // Usa el nombre de la foto generado por multer
 
+    const password = md5(contrasenya);
 
     const nuevoUsuario = new Usuario({
       nombre,
@@ -41,6 +43,7 @@ usuarioCtrl.createUsu = async (req, res) => {
       correo,
       telefono,
       edad,
+      password,
       foto: nombreFoto, // Asignamos el nombre único generado al campo foto
     });
 
@@ -96,7 +99,8 @@ usuarioCtrl.deleteUsu = async (req, res) => {
 // Actualizar un usuario
 usuarioCtrl.updateUsu = async (req, res) => {
   try {
-    const { nombre, apellido, correo, telefono, edad } = req.body;
+    const { nombre, apellido, correo, telefono, edad, contrasenya } = req.body;
+    const password = md5(contrasenya);
     const foto = req.file ? req.body.nombreFoto : undefined; // Captura la foto si existe
 
 
@@ -120,7 +124,7 @@ usuarioCtrl.updateUsu = async (req, res) => {
     // Encuentra y actualiza el usuario
     const usuario = await Usuario.findByIdAndUpdate(
       req.params.id,
-      { nombre, apellido, correo, telefono, edad, ...(foto && { foto }) }, // Solo actualiza la foto si se envía
+      { nombre, apellido, correo, telefono, edad, password, ...(foto && { foto }) }, // Solo actualiza la foto si se envía
       { new: true }
     );
 

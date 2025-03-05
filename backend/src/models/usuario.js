@@ -12,6 +12,7 @@ const usuarioSchema = new Schema({
     unique: true,
     match: [/^\S+@\S+\.\S+$/, 'El correo debe tener un formato válido']
   },
+  password: { type: String, required: true },
   foto: { type: String }, // Campo para almacenar la ruta de la imagen
 }, {
   timestamps: true,
