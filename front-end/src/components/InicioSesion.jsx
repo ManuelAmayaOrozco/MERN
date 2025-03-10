@@ -11,7 +11,7 @@ const InicioSesion = () => {
 
     useEffect(() => {
         const getUsuarios = async () => {
-        const res = await axios.get("http://localhost:4000/api/usuarios");
+        const res = await axios.get("https://mern-5pjx.onrender.com/api/usuarios");
         setLista(res.data);
         };
         getUsuarios();
