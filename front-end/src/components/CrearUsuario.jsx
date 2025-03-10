@@ -131,6 +131,22 @@ const CrearUsuario = () => {
     }
   }, [subId]);
 
+  function limpiarCampo(campo) {
+    // Limpiar el valor del campo para evitar ataques de inyección
+    if (campo && (campo.type === "text" || campo.type === "textarea" || campo.type === "password")) {
+      let valor = campo.value.trim();
+  
+      // Reemplazar caracteres especiales comunes en ataques XSS y SQL Injection
+      valor = valor.replace(/<script.*?>.*?<\/script>/gi, ""); // Eliminar etiquetas <script>
+      valor = valor.replace(/<\/?[^>]+(>|$)/g, ""); // Eliminar cualquier otra etiqueta HTML
+      valor = valor.replace(/['"\\;]/g, ""); // Eliminar comillas, barras invertidas y punto y coma
+      valor = valor.replace(/--/g, ""); // Eliminar comentarios de SQL (--) si se usa en un entorno de base de datos
+  
+      // Eliminar espacios adicionales o caracteres no deseados
+      campo.value = valor;
+    }
+  }
+  
 
   return (
     <div className="col-md-6 offset-md-3">
@@ -145,7 +161,7 @@ const CrearUsuario = () => {
               placeholder="Ingresa el nombre del socio"
               required
               name="nombre"
-              value={usuario.nombre}
+              value={limpiarCampo(usuario.nombre)}
               onChange={capturarDatos}
             />
           </div>
@@ -157,7 +173,7 @@ const CrearUsuario = () => {
               placeholder="Ingresa el apellido del socio"
               required
               name="apellido"
-              value={usuario.apellido}
+              value={limpiarCampo(usuario.apellido)}
               onChange={capturarDatos}
             />
           </div>
@@ -169,7 +185,7 @@ const CrearUsuario = () => {
               placeholder="Ingresa la edad del socio"
               required
               name="edad"
-              value={usuario.edad}
+              value={limpiarCampo(usuario.edad)}
               onChange={capturarDatos}
             />
           </div>
@@ -181,7 +197,7 @@ const CrearUsuario = () => {
               placeholder="Ingresa el teléfono del socio"
               required
               name="telefono"
-              value={usuario.telefono}
+              value={limpiarCampo(usuario.telefono)}
               onChange={capturarDatos}
             />
           </div>
@@ -193,7 +209,7 @@ const CrearUsuario = () => {
               placeholder="Ingresa el correo del socio"
               required
               name="correo"
-              value={usuario.correo}
+              value={limpiarCampo(usuario.correo)}
               onChange={capturarDatos}
             />
           </div>
@@ -205,7 +221,7 @@ const CrearUsuario = () => {
               placeholder="Ingresa la contraseña del socio"
               required
               name="contrasenya"
-              value={usuario.contrasenya}
+              value={limpiarCampo(usuario.contrasenya)}
               onChange={capturarDatos}
             />
           </div>
