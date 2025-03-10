@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 
 // Cadena de conexión
-const URI = process.env.MONGODB_URI || 'mongodb://localhost/dbtest';
+const URI = process.env.MONGODB_URI || 'mongodb+srv://mamaoro1405:1234@clustermern.4whqd.mongodb.net/?retryWrites=true&w=majority&appName=ClusterMERN';
 // const URI = process.env.MONGODB_URI ? process.env.MONGODB_URI : 'mongodb://localhost/dbtest';
 
 
