@@ -17,7 +17,7 @@ function App() {
           <Routes>
             <Route path="/inicio-sesion" element={<InicioSesion />} />
             <Route path='/' element={<RutaProtegida><ListaUsuarios/></RutaProtegida>}/>
-            <Route path='/CrearUsuario' element={<RutaProtegida><CrearUsuarios/></RutaProtegida>}/>
+            <Route path='/CrearUsuario' element={<CrearUsuarios/>}/>
             <Route path='/edit/:id' element={<RutaProtegida><CrearUsuarios/></RutaProtegida>}/>
             <Route path="*" element={<Navigate to="/inicio-sesion"/>}/>
           </Routes>
